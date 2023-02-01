@@ -1,8 +1,15 @@
 import { IssueList } from '../components/IssueList';
 import { LabelPicker } from '../components/LabelPicker';
+import { useState } from 'react';
 
 
 export const ListView = () => {
+
+const [selectedLabels,setSelectedLabels]=useState<Array<string>>([])
+const handleOnClick=(labelName:string)=>{
+  (selectedLabels.includes(labelName))?setSelectedLabels(selectedLabels.filter(label=>label!==labelName)):setSelectedLabels([...selectedLabels,labelName])
+}
+
   return (
     <div className="row mt-5">
       
@@ -11,7 +18,7 @@ export const ListView = () => {
       </div>
       
       <div className="col-4">
-        <LabelPicker />
+        <LabelPicker selectLabel={selectedLabels} onChange={handleOnClick}/>
       </div>
     </div>
   )
