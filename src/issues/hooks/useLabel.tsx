@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { githubApi } from "../../api/githubApi";
-import { Label } from "../interface/Label";
+import { Label } from "../interface";
 
 const getLabel=async():Promise<Array<Label>>=>{
-    const {data}=await githubApi.get<Array<Label>>("/labels")
+    const {data}=await githubApi.get<Array<Label>>("/labels",{headers:{
+      Authorization:null
+    }})
 
     console.log(data);
     
