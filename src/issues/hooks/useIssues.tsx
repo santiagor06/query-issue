@@ -10,7 +10,7 @@ const getIssues=async():Promise<Array<Issue>>=>{
 
 export const  useIssues=()=>{
     const queryIssue=useQuery(
-        ["issue"],
+        ["issues"],
         getIssues,
         {staleTime:1000*60*60}
     )
