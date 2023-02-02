@@ -1,19 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { githubApi } from '../../api/githubApi';
 import { Issue } from '../interface';
-const getIssue=async(issueNumber:string):Promise<Issue>=>{
+import { sleep } from '../helpers/sleep';
+export const getIssue=async(issueNumber:number):Promise<Issue>=>{
+    sleep(2)
     const {data}=await githubApi.get<Issue>(`/issues/${issueNumber}`)
     console.log(data)
     return data
 }
-const getIssueComments=async(issueNumber:string):Promise<Array<Issue>>=>{
+export const getIssueComments=async(issueNumber:number):Promise<Array<Issue>>=>{
+    sleep(2)
     const {data}=await githubApi.get<Array<Issue>>(`/issues/${issueNumber}/comments`)
     console.log(data)
     return data
 }
 
 
-export const useIssue=(issueNumber:string)=>{
+export const useIssue=(issueNumber:number)=>{
 const queryIssue=useQuery(
     ["issue",issueNumber],
     ()=>getIssue(issueNumber)
@@ -21,7 +24,10 @@ const queryIssue=useQuery(
 )
 const queryIssueComments=useQuery(
     ["issue",issueNumber,"comments"],
-    ()=>getIssueComments(issueNumber)
+    ()=>getIssueComments(queryIssue.data!.number),
+    {
+        enabled:queryIssue.data !==undefined
+    }
 
 )
 return {queryIssue,queryIssueComments}

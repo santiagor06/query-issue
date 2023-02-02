@@ -3,12 +3,16 @@ import { LabelPicker } from '../components/LabelPicker';
 import { useState } from 'react';
 import { useIssues } from '../hooks';
 import { Loading } from '../../shared/components/Loading';
+import { State } from '../interface';
 
 
 
 export const ListView = () => {
-const query=useIssues()
+
 const [selectedLabels,setSelectedLabels]=useState<Array<string>>([])
+const [state,setState]=useState<State>()
+const query=useIssues({state,selectedLabels})
+
 const handleOnClick=(labelName:string)=>{
   (selectedLabels.includes(labelName))?setSelectedLabels(selectedLabels.filter(label=>label!==labelName)):setSelectedLabels([...selectedLabels,labelName])
 }
@@ -17,7 +21,7 @@ const handleOnClick=(labelName:string)=>{
     <div className="row mt-5">
       
       <div className="col-8">
-        {query.isLoading?<Loading/>:<IssueList issuesList={query.data || []} />}
+        {query.isLoading?<Loading/>:<IssueList state={state} handleActive={(state:State|any)=>setState(state)} issuesList={query.data || []} />}
         
       </div>
       
