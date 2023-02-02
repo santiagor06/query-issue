@@ -7,7 +7,7 @@ import { State } from '../interface';
 
 
 
-export const ListView = () => {
+export const ListViewInfinite = () => {
 
 const [selectedLabels,setSelectedLabels]=useState<Array<string>>([])
 const [state,setState]=useState<State>()
@@ -22,11 +22,7 @@ const handleOnClick=(labelName:string)=>{
       
       <div className="col-8">
         {queryIssue.isLoading?<Loading/>:<IssueList state={state} handleActive={(state:State|any)=>setState(state)} issuesList={queryIssue.data || []} />}
-        <div className='d-flex mt-2 justify-content-between align-items-center'>
-          <button className='btn btn-outline-primary' disabled={queryIssue.isFetching} onClick={previousPage}>Prev</button>
-          <span>{page}</span>
-          <button className='btn btn-outline-primary' disabled={queryIssue.isFetching} onClick={nextPage}>Next</button>
-        </div>
+      <button className='btn btn-outline-primary mt-2'>Load More..</button>
       </div>
       
       <div className="col-4">
