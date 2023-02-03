@@ -11,7 +11,7 @@ interface Props{
 }
 
 const getIssues=async({labels,state,page=1}:Props):Promise<Array<Issue>>=>{
-    sleep(2)
+ 
     const params=new URLSearchParams()
     if(state)params.append("state",state)
     if(labels.length>0){
